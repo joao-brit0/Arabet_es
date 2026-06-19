@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Aposta;
 use App\Models\Partida;
 use App\Models\Apostador;
@@ -13,55 +14,53 @@ class ApostaController extends Controller
     public function apostar(Request $request)
     {
         $request->validate([
-            'id_apostador' => 'required|integer',
-            'id_partida' => 'required|integer',
-            'valor' => 'required|numeric|min:1',
-            'palpite' => 'required|string|in:MANDANTE,EMPATE,VISITANTE'
+            'id_apostador' => 'required',
+            'valor_total'  => 'required|numeric|min:0.01',
+            'apostas'      => 'required|array',
         ]);
 
         try {
             return DB::transaction(function () use ($request) {
-                
-               
-                $partida = Partida::find($request->id_partida);
-
-                if (!$partida || $partida->status !== 'AGENDADA') {
-                    return response()->json(['error' => 'Partida indisponível para apostas.'], 400);
-                }
-
-                
                 $apostador = Apostador::lockForUpdate()->find($request->id_apostador);
 
-                if (!$apostador || $apostador->saldo < $request->valor) {
-                    return response()->json(['error' => 'Saldo insuficiente.'], 400);
+                if (!$apostador || $apostador->saldo < $request->valor_total) {
+                    return response()->json(['error' => 'Saldo insuficiente ou apostador não encontrado.'], 400);
                 }
 
-                
-                $oddMomento = match ($request->palpite) {
-                    'MANDANTE' => $partida->odd_mandante,
-                    'EMPATE' => $partida->odd_empate,
-                    'VISITANTE' => $partida->odd_visitante,
-                };
+                foreach ($request->apostas as $item) {
+                    $partida = Partida::find($item['jogoId']);
 
-                
-                $apostador->decrement('saldo', $request->valor);
+                    if (!$partida || $partida->status !== 'AGENDADA') {
+                        throw new \Exception("A partida de ID {$item['jogoId']} está indisponível.");
+                    }
 
-            
-                Aposta::create([
-                    'id_apostador' => $request->id_apostador,
-                    'id_partida' => $request->id_partida,
-                    'valor' => $request->valor,
-                    'palpite' => $request->palpite,
-                    'odd_momento' => $oddMomento,
-                    'status' => 'PENDENTE',
-                    'data_aposta' => now(),
-                ]);
+                    $oddMomento = match ($item['palpite']) {
+                        'MANDANTE'  => $partida->odd_mandante,
+                        'EMPATE'    => $partida->odd_empate,
+                        'VISITANTE' => $partida->odd_visitante,
+                        default     => throw new \Exception("Palpite inválido."),
+                    };
 
-                return response()->json(['message' => 'Aposta registrada com sucesso!'], 201);
+                    Aposta::create([
+                        'id_apostador'      => $request->id_apostador, 
+                        'jogo_id'           => $item['jogoId'], 
+                        'palpite'           => $item['palpite'],
+                        'valor'             => $request->valor_total,
+                        'odd'               => $oddMomento, 
+                        'retorno_potencial' => $request->valor_total * $oddMomento, 
+                    ]);
+                }
+
+                $apostador->decrement('saldo', $request->valor_total);
+
+                return response()->json(['message' => 'Bilhete registrado com sucesso!'], 201);
             });
 
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Erro ao processar a aposta.', 'details' => $e->getMessage()], 500);
+            return response()->json([
+                'error' => 'Erro ao processar o bilhete.', 
+                'details' => $e->getMessage()
+            ], 500);
         }
     }
 }
