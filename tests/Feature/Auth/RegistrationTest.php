@@ -1,19 +1,28 @@
 <?php
 
 test('registration screen can be rendered', function () {
-    $response = $this->get('/register');
+    $this->withoutVite();
+
+    $response = $this->get('/cadastro');
 
     $response->assertStatus(200);
 });
 
 test('new users can register', function () {
-    $response = $this->post('/register', [
+    $response = $this->post('/cadastro', [
         'name' => 'Test User',
+        'cpf' => '12345678909',
         'email' => 'test@example.com',
         'password' => 'password',
-        'password_confirmation' => 'password',
+        'role' => 'cliente',
     ]);
 
-    $this->assertAuthenticated();
-    $response->assertRedirect(route('dashboard', absolute: false));
+    $response->assertRedirect('/');
+
+    $this->assertDatabaseHas('users', [
+        'name' => 'Test User',
+        'cpf' => '12345678909',
+        'email' => 'test@example.com',
+        'role' => 'cliente',
+    ]);
 });
