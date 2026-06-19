@@ -211,9 +211,9 @@ export default function Dashboard() {
       
       {/* ================= BARRA LATERAL (SIDEBAR) ================= */}
       <aside className="w-64 bg-[#0A0A0A] flex flex-col border-r border-[#202020] hidden md:flex">
-        <div className="p-6 flex items-center justify-center border-b border-[#202020]">
+        <a href="/" className="p-6 flex items-center justify-center border-b border-[#202020]">
            <img src="/images/logo.png" alt="AraBet" className="h-10 object-contain" />
-        </div>
+        </a>
 
         <nav className="flex-1 px-4 space-y-2 mt-6">
           <a href="#" className="flex items-center gap-3 text-[#050505] bg-[#7DFF00] font-medium p-3 rounded-md transition">
