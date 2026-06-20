@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Apostador extends Model
 {
     protected $table = 'arabetdb.apostador';
-    protected $primaryKey = 'id_usuario';
+    protected $primaryKey = 'id_apostador';
     public $timestamps = false;
 
     protected $fillable = [
