@@ -13,7 +13,6 @@ export default function Dashboard() {
   const [modalDepositoAberto, setModalDepositoAberto] = useState(false);
   const [valorDeposito, setValorDeposito] = useState('');
   const [carregandoDeposito, setCarregandoDeposito] = useState(false);
-  const USUARIO_ID = 2
 
   // ==========================================
   // ESTADOS (Variáveis da Tela)
@@ -39,20 +38,23 @@ export default function Dashboard() {
         const resposta = await fetch(`http://localhost:8000/api/usuario/${USUARIO_ID}`);
         
         if (resposta.ok) {
-          const dados = await resposta.json();
-          setSaldo(parseFloat(dados.saldo || 0)); 
+          const dadosUsuario = await resposta.json();
+          setSaldo(parseFloat(dadosUsuario.saldo || 0)); 
         } else {
           console.error("Erro ao buscar dados do usuário no banco");
-        const resposta = await fetch(`http://localhost:8000/api/historico/${USUARIO_ID}`);
-        if (resposta.ok) {
-          const dados = await resposta.json();
-          setSaldo(parseFloat(dados[0].saldo || 0));
-          setDados(dados); 
+        }
+
+        const respostaHistorico = await fetch(`http://localhost:8000/api/historico/${USUARIO_ID}`);
+        if (respostaHistorico.ok) {
+          const dadosHistorico = await respostaHistorico.json();
+          setSaldo(parseFloat(dadosHistorico[0]?.saldo || 0));
+          setDados(dadosHistorico); 
         }
       } catch (erro) {
         console.error("Erro de conexão ao buscar saldo:", erro);
       }
     };
+
     buscarSaldoDoBanco();
   }, []);
 
