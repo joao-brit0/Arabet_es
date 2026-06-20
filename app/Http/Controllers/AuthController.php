@@ -25,12 +25,12 @@ class AuthController extends Controller
             'email' => ['required', 'email', Rule::unique(User::class, 'email')],
             'password' => 'required|min:6',
             'tipo' => 'required|string|in:ADMINISTRADOR,APOSTADOR', 
-            // A data só é obrigatória se ele for APOSTADOR
             'data_nascimento' => 'required_if:tipo,APOSTADOR|date|before_or_equal:-18 years',
         ]);
 
         try {
-            DB::transaction(function () use ($request) {
+            // Ajustamos a transação para retornar o objeto $user criado
+            $user = DB::transaction(function () use ($request) {
                 // 1. Cria o registro base na tabela arabetdb.usuario
                 $user = User::create([
                     'nome' => $request->nome,
@@ -48,9 +48,17 @@ class AuthController extends Controller
                         'saldo' => 0.00,
                     ]);
                 }
+
+                return $user; // Retorna o usuário para fora da Closure
             });
 
-            // Sucesso! Redireciona
+            // 👇 MÁGICA AQUI: Autentica o usuário recém-criado na sessão do Laravel
+            Auth::login($user);
+
+            // Boa prática de segurança: gera um novo ID de sessão após logar
+            $request->session()->regenerate();
+
+            // Sucesso! Redireciona diretamente para o dashboard
             return redirect('/dashboard')->with('success', 'Cadastro realizado com sucesso!');
 
         } catch (\Exception $e) {
@@ -81,7 +89,7 @@ class AuthController extends Controller
             $request->session()->regenerate();
 
             // Redireciona o usuário (o intended manda de volta pra página que ele tentou acessar antes)
-            return redirect()->intended('/');
+            return redirect()->intended('/dashboard');
         }
 
         // 3. Se errar e-mail ou senha, volta pro form com erro

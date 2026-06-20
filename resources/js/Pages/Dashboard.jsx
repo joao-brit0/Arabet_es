@@ -6,15 +6,15 @@ import {
 
 import { usePage } from '@inertiajs/react';
 import MinhasApostasComponent from '@/Components/MinhasApostasComponent';
+import BonusScreenComponent from '@/Components/BonusScreenComponent';
 
 export default function Dashboard() {
   // 👇 ID do usuário que já está cadastrado no seu banco de dados
-  const USUARIO_ID = 4; 
   const [modalDepositoAberto, setModalDepositoAberto] = useState(false);
   const [valorDeposito, setValorDeposito] = useState('');
   const [carregandoDeposito, setCarregandoDeposito] = useState(false);
-  const USUARIO_ID = 2
-
+  const USUARIO_ID = usePage().props.auth.user.id_usuario;
+  
   // ==========================================
   // ESTADOS (Variáveis da Tela)
   // ==========================================
@@ -36,25 +36,26 @@ export default function Dashboard() {
   useEffect(() => {
     const buscarSaldoDoBanco = async () => {
       try {
-        const resposta = await fetch(`http://localhost:8000/api/usuario/${USUARIO_ID}`);
+        const resposta = await fetch(`http://localhost:8000/api/historico/${USUARIO_ID}`);
         
         if (resposta.ok) {
           const dados = await resposta.json();
-          setSaldo(parseFloat(dados.saldo || 0)); 
+          setSaldo(parseFloat(dados[0].saldo || 0)); 
+          setDados(dados); 
         } else {
           console.error("Erro ao buscar dados do usuário no banco");
-        const resposta = await fetch(`http://localhost:8000/api/historico/${USUARIO_ID}`);
-        if (resposta.ok) {
-          const dados = await resposta.json();
-          setSaldo(parseFloat(dados[0].saldo || 0));
-          setDados(dados); 
-        }
-      } catch (erro) {
+        //const resposta = await fetch(`http://localhost:8000/api/historico/${USUARIO_ID}`);}
+        //if (resposta.ok) {
+         // const dados = await resposta.json();
+          //setSaldo(parseFloat(dados[0].saldo || 0));
+          //setDados(dados); 
+        //}
+        }}catch (erro) {
         console.error("Erro de conexão ao buscar saldo:", erro);
       }
     };
     buscarSaldoDoBanco();
-  }, []);
+  }, [saldo]);
 
   // ==========================================
   // 2. API: BUSCAR JOGOS REAIS DO LARAVEL
@@ -221,12 +222,13 @@ export default function Dashboard() {
           <button onClick={() => setTelaAtual("minhas_apostas")} className={`w-full mt-4 flex items-center gap-3 font-medium p-3 rounded-md transition ${telaAtual === 'minhas_apostas' ? 'text-[#050505] bg-[#7DFF00]' : 'text-[#BDBDBD] hover:text-[#7DFF00] hover:bg-[#111111]'}`}>
             <Ticket size={20} /> Minhas Apostas
           </button>
-          <a href="#" className="flex items-center gap-3 text-[#BDBDBD] hover:text-[#7DFF00] hover:bg-[#111111] p-3 rounded-md transition">
+          <a href="#" className="flex items-center gap-3 text-[#BDBDBD] hover:text-[#7DFF00] hover:bg-[#111111] p-3 rounded-md transition" onClick={() => setTelaAtual("cupons")}>
             <Gift size={20} /> Cupons
           </a>
-          <a href="#" className="flex items-center gap-3 text-[#BDBDBD] hover:text-[#7DFF00] hover:bg-[#111111] p-3 rounded-md transition">
-            <Settings size={20} /> Configurações
-          </a>
+            <Link href="/perfil" className="flex items-center gap-3 text-[#BDBDBD] hover:text-[#7DFF00] hover:bg-[#111111] p-3 rounded-md transition">
+              <Settings size={20} /> Configurações
+            </Link>
+          
         </nav>
 
         <div className="p-4 mt-auto">
@@ -288,6 +290,8 @@ export default function Dashboard() {
           {/* ================= COLUNA ESQUERDA ================= */}
           { telaAtual === 'minhas_apostas' ? (
               <MinhasApostasComponent dadosApostas={dados} />
+            ) : telaAtual === 'cupons' ? (
+              <BonusScreenComponent />
             ) : (
             <div className="flex-1 min-w-[500px]">
               <div className="bg-[url(/images/background.png)] bg-cover bg-center rounded-md p-10 mb-10 border border-[#202020] relative overflow-hidden flex flex-col justify-center">
@@ -443,7 +447,7 @@ export default function Dashboard() {
       {/* ================= 📱 TELA/MODAL DE DEPÓSITO ================= */}
       {modalDepositoAberto && (
         <div className="fixed inset-0 bg-black/75 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fade-in">
-          <div className="bg-gray-900 border border-gray-800 p-6 rounded-2xl w-full max-w-md shadow-2xl text-white relative">
+          <div className="bg-[#111111] rounded-md border border-[#202020] p-6 w-full max-w-md shadow-2xl text-white relative">
             
             {/* Botão de Fechar (X) no topo direito do modal */}
             <button 
@@ -476,7 +480,7 @@ export default function Dashboard() {
                     placeholder="0,00"
                     value={valorDeposito}
                     onChange={(e) => setValorDeposito(e.target.value)}
-                    className="w-full bg-gray-950 border border-gray-800 focus:border-green-500 rounded-xl py-3 pl-10 pr-4 text-white font-medium text-lg outline-none transition-colors placeholder:text-gray-700"
+                    className="w-full bg-[#0A0A0A] border-gray-800/20 focus:border-green-400 rounded-xl py-3 pl-10 pr-4 text-white font-medium text-lg outline-none transition-colors placeholder:text-gray-700"
                     required
                     disabled={carregandoDeposito}
                     autoFocus
@@ -491,7 +495,7 @@ export default function Dashboard() {
                     key={valor}
                     type="button"
                     onClick={() => setValorDeposito(valor.toString())}
-                    className="py-1.5 bg-gray-800 hover:bg-gray-700 rounded-lg text-sm font-semibold transition-colors border border-transparent hover:border-gray-600"
+                    className="py-1.5 bg-[#0A0A0A] border-[#202020] hover:border-[#7DFF00]/50 rounded-lg text-sm font-semibold transition-colors border "
                   >
                     + R$ {valor}
                   </button>
@@ -503,7 +507,7 @@ export default function Dashboard() {
                 <button 
                   type="button"
                   onClick={() => { setModalDepositoAberto(false); setValorDeposito(''); }}
-                  className="flex-1 py-3 bg-gray-800 hover:bg-gray-700 rounded-xl font-semibold transition-colors"
+                  className="flex-1 py-3 hover:bg-gray-700 rounded-xl font-semibold transition-colors"
                   disabled={carregandoDeposito}
                 >
                   Cancelar

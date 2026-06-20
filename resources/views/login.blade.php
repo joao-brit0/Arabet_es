@@ -7,7 +7,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-[#0D0D0D]">
-    <section class="min-h-screen flex items-center justify-center p-6 relative">
+    <section class="min-h-screen flex flex-col items-center justify-center p-6 relative">
         
         <div class="fixed top-0 left-0 h-full w-full overflow-hidden -z-10">
             <div class="absolute -top-20 -right-20 h-96 w-96 rounded-full bg-lime-500/10 blur-[150px]"></div>
@@ -51,6 +51,7 @@
             </form>
 
         </div>
+        <a href="/" class="text-gray-500 underline hover:text-lime-300 transition mt-2">Início</a>
     </section>
 </body>
 </html>

@@ -1,7 +1,7 @@
 import BonusCardComponent from "@/Components/BonusCardComponent.jsx";
 import FooterComponent from "@/Components/FooterComponent";
 import SlipBetComponent from "@/Components/SlipBetComponent.jsx";
-import { usePage } from '@inertiajs/react';
+import { usePage, Link } from '@inertiajs/react';
 import { User } from 'lucide-react';
 
 export default function Home () {
@@ -15,21 +15,24 @@ export default function Home () {
                     <div className="flex items-center gap-4">
                         <img src="images/logo.png" alt="logo da casa de aposta AraBet"
                              className="w-30 h-10 mr-16"/>
-                        <li><a href="#" className="hover:text-[#7DFF00] transition">Jogos</a></li>
-                        <li><a href="#" className="hover:text-[#7DFF00] transition">Ao vivo</a></li>
+                        <li><a href="/dashboard" className="hover:text-[#7DFF00] transition">Jogos</a></li>
+                        <li><a href="/dashboard" className="hover:text-[#7DFF00] transition">Ao vivo</a></li>
                         <li><a href="#" className="hover:text-[#7DFF00] transition">Tabelas</a></li>
                         <li><a href="#" className="hover:text-[#7DFF00] transition">VIP</a></li>
                         <li><a href="#" className="hover:text-[#7DFF00] transition">Suporte</a></li>
                     </div>
                     <div className="flex items-center gap-4">
-                        <li><a href="#" className="text-[#7DFF00] flex items-center gap-2 mr-5 hover:text-white"><img
+                        <li><a href="/login" className="text-[#7DFF00] flex items-center gap-2 mr-5 hover:text-white"><img
                             src="images/gift-svgrepo-com.svg" alt="ìcone de uma caixa de presente"
                             className="w-6"/>Promoções</a></li>
                         {auth.user ? (
                             <>
-                            <a href="/dashboard" className="flex items-center gap-2">Painel</a>
+                            <a href="/dashboard" className="flex items-center gap-2 hover:text-[#7DFF00] transition">Painel</a>
                             <div className="w-10 h-10 rounded-md bg-[#111111] border border-[#202020] text-[#BDBDBD] hover:text-[#7DFF00] hover:border-[#7DFF00] transition cursor-pointer flex items-center justify-center">
-                                          <User size={20} />
+                                <Link href="/perfil" className="flex items-center gap-2">
+                                    <User size={20} />
+                                </Link>
+                                          
                                         </div>
                             </>
                         ) : (
@@ -52,12 +55,18 @@ export default function Home () {
                 <p className="text-[#BDBDBD] text-lg mt-2 w-[310px]">As melhores odds, os maiores eventos e a emoção que você
                     merece!</p>
             </div>
-            <div className="flex mt-6 gap-4">
-                <a href="#"
-                   className="text-[#050505] bg-[#7DFF00] font-medium px-7 py-3 rounded-md hover:bg-[#56C800] transition">Cadastre-se
-                    agora</a>
-                <a href="#" className="text-white font-medium px-7 py-3 border border-[#202020] rounded-md ">Explorar</a>
-            </div>
+            {auth.user ? (
+                <div className="flex items-center gap-6 mt-10">
+                    <a href="/dashboard" className="px-6 py-3 w-60 text-center bg-[#7DFF00] text-[#050505] font-semibold rounded-md hover:bg-[#7DFF00]/90 transition">Apostar Agora</a>
+                </div>
+            ) : (
+                <div className="flex mt-6 gap-4">
+                    <a href="/cadastro"
+                    className="text-[#050505] bg-[#7DFF00] font-medium px-7 py-3 rounded-md hover:bg-[#56C800] transition">Cadastre-se
+                        agora</a>
+                    <a href="/login" className="text-white font-medium px-7 py-3 border border-[#202020] rounded-md ">Explorar</a>
+                </div>
+            )}
             <div className="flex items-center gap-6 text-sm mt-10 text-[#BDBDBD]">
                 <p className="flex items-center gap-2"><img src="images/security-verified-svgrepo-com (1).svg"
                                                             alt="ícone de segurança" className="w-6"/>Pagamentos rápidos e

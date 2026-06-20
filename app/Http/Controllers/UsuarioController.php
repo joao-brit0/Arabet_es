@@ -23,16 +23,9 @@ class UsuarioController extends Controller
         // DICA: Se no seu banco a coluna de nome for 'name' em vez de 'nome', 
         // mude aqui para $usuario->name
         return response()->json([
-            'id' => $usuario->id,
             'nome' => $usuario->name ?? $usuario->nome, 
-            'email' => $usuario->email,
-            'telefone' => $usuario->telefone, // Se não tiver essa coluna no banco, pode retornar null
             'cpf' => $usuario->cpf ?? '***.***.***-**',
-            'saldo' => $usuario->saldo ?? 0.00,
-            
-            // Dados fictícios de estatísticas (Você pode calcular isso no banco no futuro)
-            'apostas_realizadas' => 12,
-            'taxa_acerto' => 68
+            'email' => $usuario->email,
         ], 200);
     }
 
@@ -52,7 +45,6 @@ class UsuarioController extends Controller
             'nome' => 'required|string|max:255',
             // O email deve ser único, exceto para o próprio usuário que está atualizando
             'email' => 'required|email|max:255|unique:users,email,' . $id,
-            'telefone' => 'nullable|string|max:20',
         ]);
 
         try {
@@ -65,10 +57,7 @@ class UsuarioController extends Controller
             
             $usuario->email = $dadosValidados['email'];
             
-            // Verifica se a tabela possui a coluna telefone antes de salvar
-            if (in_array('telefone', $usuario->getFillable()) || \Schema::hasColumn('users', 'telefone')) {
-                $usuario->telefone = $dadosValidados['telefone'];
-            }
+            
 
             $usuario->save();
 
@@ -92,19 +81,19 @@ class UsuarioController extends Controller
 
         // Validação
         $request->validate([
-            'senha_atual' => 'required|string',
-            'nova_senha' => 'required|string|min:6'
+            'senha_atual' => 'required',
+            'nova_senha' => 'required|min:6'
         ]);
 
         // Verifica se a "Senha Atual" digitada bate com a que está no banco de dados
-        if (!Hash::check($request->senha_atual, $usuario->password)) {
+        if (!Hash::check($request->senha_atual, $usuario->senha)) {
             // Retorna erro 400 (Bad Request) se a senha estiver errada
             return response()->json(['message' => 'A senha atual está incorreta.'], 400);
         }
 
         try {
             // Atualiza a senha criptografando a nova
-            $usuario->password = Hash::make($request->nova_senha);
+            $usuario->senha = Hash::make($request->nova_senha);
             $usuario->save();
 
             return response()->json(['message' => 'Senha atualizada com sucesso!'], 200);

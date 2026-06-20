@@ -1,5 +1,7 @@
 import {useState} from 'react'
+import { usePage } from '@inertiajs/react';
 export default function SlipBetComponent () {
+    const { auth } = usePage().props;
     const [selectItem, setSelectItem] = useState(2)
     const [bet, setBet] = useState(50)
     const [odd, setOdd] = useState(3.2)
@@ -32,10 +34,12 @@ export default function SlipBetComponent () {
                         Veja como é simples apostar no Campeonato Alagoano e receba seus ganhos rapidamente.
                     </p>
 
-                    <button
+                    {auth.user ? ('') : (
+                        <button
                         className="mt-8 rounded-lg bg-lime-400 px-6 py-4 font-bold text-black transition hover:bg-lime-300">
                         Criar conta grátis
-                    </button>
+                        </button>
+                    )}
                 </div>
 
 

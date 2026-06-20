@@ -1,6 +1,7 @@
 
 export default function MinhasApostasComponent({dadosApostas}) {
-  if (!dadosApostas || dadosApostas.length === 0) {
+    console.log(dadosApostas);
+  if (!dadosApostas || dadosApostas.length === 0 || dadosApostas[0].id_aposta === null) {
         return (
             <div className="min-h-screen bg-[#121212] p-8 flex justify-center items-center">
                 <div className="text-center text-gray-500 bg-[#1E1E1E] p-10 rounded-2xl border border-[#333]">

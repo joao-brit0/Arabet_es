@@ -1,4 +1,6 @@
+import { usePage } from '@inertiajs/react';
 export default function BonusCardComponent () {
+    const { auth } = usePage().props;
     return (
         <div className="relative w-full overflow-hidden rounded-3xl border border-lime-500/20 bg-[#000] p-8">
 
@@ -28,7 +30,11 @@ export default function BonusCardComponent () {
 
                     <button
                         className="mt-8 rounded-xl bg-[#7DFF00] px-8 py-4 font-bold text-black transition hover:bg-lime-300">
-                        Cadastre-se agora →
+                            {auth.user ? (
+                                <a href="/dashboard">Pegue seu bônus!</a>
+                            ) : (
+                                <a href="/cadastro">Cadastre-se agora → </a>
+                            )}
                     </button>
                 </div>
 
