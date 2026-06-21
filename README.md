@@ -1,59 +1,123 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <a href="https://github.com/seu-usuario/arabet" target="_blank">
+    <img src="docs/assets/banner.png" width="100%" alt="AraBet Banner" />
+  </a>
 </p>
 
-## About Laravel
+<p align="center">
+  A modern, integrated web platform built to simulate a sports betting system focused on Alagoas soccer.
+</p>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<p align="center">
+  <a href="#about"><img src="https://img.shields.io/badge/About-24292e?style=for-the-badge&logo=info&logoColor=white" alt="About" /></a>
+  <a href="#demo"><img src="https://img.shields.io/badge/Demo-24292e?style=for-the-badge&logo=airplay&logoColor=white" alt="Demo" /></a>
+  <a href="#built-with"><img src="https://img.shields.io/badge/Built%20With-24292e?style=for-the-badge&logo=react&logoColor=61DAFB" alt="Built With" /></a>
+  <a href="#getting-started"><img src="https://img.shields.io/badge/Getting%20Started-24292e?style=for-the-badge&logo=laravel&logoColor=FF2D20" alt="Getting Started" /></a>
+  <a href="#environment-variables--security"><img src="https://img.shields.io/badge/Security-24292e?style=for-the-badge&logo=springsecurity&logoColor=6DB33F" alt="Security" /></a>
+  <a href="#contributing"><img src="https://img.shields.io/badge/Contributing-24292e?style=for-the-badge&logo=github&logoColor=white" alt="Contributing" /></a>
+</p>
+</br>
+<p align="center">
+  <img src="docs/assets/separator.svg" alt="separator" width="100%" />
+</p>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+<h2>About</h2>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+AraBet is all about providing a realistic sports betting experience, allowing users to place simple bets, manage simulated wallets, and track their bet history. It features a robust PHP/Laravel backend REST API and a fast, responsive React frontend smoothly connected via Inertia.js.
 
-## Learning Laravel
+<p align="center">
+  <img src="docs/assets/separator.svg" alt="separator" width="100%" />
+</p>
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+<h2>Demo</h2>
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+<p align="center">
+  <img src="docs/assets/arabet-present.webp" width="100%" alt="AraBet Demo" />
+</p>
 
-## Laravel Sponsors
+<p align="center">
+  <img src="docs/assets/separator.svg" alt="separator" width="100%" />
+</p>
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+<h2>Built With</h2>
 
-### Premium Partners
+This project is built using the following major frameworks, libraries, and tools:
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+* [![React][React-shield]][React-url]
+* [![Vite][Vite-shield]][Vite-url]
+* [![Laravel][Laravel-shield]][Laravel-url]
+* [![Inertia][Inertia-shield]][Inertia-url]
+* [![Tailwind][Tailwind-shield]][Tailwind-url]
+* [![PostgreSQL][Postgres-shield]][Postgres-url]
+* [![Docker][Docker-shield]][Docker-url]
 
-## Contributing
+[React-shield]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[React-url]: https://react.dev/
+[Vite-shield]: https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=FFD62B
+[Vite-url]: https://vite.dev/
+[Laravel-shield]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
+[Laravel-url]: https://laravel.com/
+[Inertia-shield]: https://img.shields.io/badge/Inertia.js-9553E9?style=for-the-badge&logo=inertia&logoColor=white
+[Inertia-url]: https://inertiajs.com/
+[Tailwind-shield]: https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white
+[Tailwind-url]: https://tailwindcss.com/
+[Postgres-shield]: https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white
+[Postgres-url]: https://www.postgresql.org/
+[Docker-shield]: https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white
+[Docker-url]: https://www.docker.com/
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+<p align="center">
+  <img src="docs/assets/separator.svg" alt="separator" width="100%" />
+</p>
 
-## Code of Conduct
+<h2>Getting Started</h2>
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+The easiest way to run the entire stack (Frontend, Backend, Database, and migrations) is using Docker alongside Composer and NPM.
 
-## Security Vulnerabilities
+### Prerequisites
+Make sure you have the following installed on your machine:
+- Docker & Docker Compose
+- Node.js & NPM
+- PHP & Composer
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Execution Steps
 
-## License
+1. **Clone the Repository:**
+```bash
+   $ git clone [https://github.com/seu-usuario/arabet.git](https://github.com/seu-usuario/arabet.git)
+   $ cd arabet
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+   Setup Backend & Database:
+Run the following command at the project root to fetch dependencies, configure the environment, and generate the app key:
+
+Bash
+   $ composer install
+   $ cp .env.example .env
+   $ php artisan key:generate
+Note: Ensure your PostgreSQL connection details are correctly set in the .env file. Then, execute database migrations and seeders to populate initial game data:
+
+Bash
+   $ php artisan migrate --seed
+Spin up the Frontend & Serve the App:
+Install JavaScript dependencies and start the Vite and Laravel servers:
+
+Bash
+   $ npm install
+   $ npm run dev
+   $ php artisan serve
+Accessing the Applications:
+Once initialization completes, you can access the applications at:
+
+Web Application & Backend: http://localhost:8000
+
+The project's local development credentials and configs are predefined in the .env file.
+
+During the backend build process, automated security actions must be executed:
+
+The php artisan key:generate command is executed to dynamically create a unique 256-bit APP_KEY.
+
+This key is bundled into the Laravel configuration to handle secure session encryption, password hashing, and cookie protection automatically.
+
+Contributions must follow the guidelines set in the CONTRIBUTING.md file under the docs directory.
+
+This project is licensed under the MIT License.
