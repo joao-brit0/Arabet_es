@@ -11,6 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (config('database.default') === 'pgsql') {
+        DB::statement('CREATE SCHEMA IF NOT EXISTS arabetdb');
+    }
        Schema::create('apostas', function (Blueprint $table) {
         $table->id();
         $table->unsignedBigInteger('jogo_id');
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('apostas');
+        Schema::dropIfExists('arabetdb.partida');
     }
 };

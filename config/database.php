@@ -95,8 +95,9 @@ return [
             'charset' => env('DB_CHARSET', 'utf8'),
             'prefix' => '',
             'prefix_indexes' => true,
-            'search_path' => 'public',
-            'sslmode' => env('DB_SSLMODE', 'prefer'),
+            'schema' => env('APP_ENV') === 'testing' ? 'arabetdb' : env('DB_SCHEMA', 'public'),
+            'sslmode' => env('DB_SSL_MODE', 'prefer'),
+            'search_path' => env('APP_ENV') === 'testing' ? 'arabetdb' : env('DB_SCHEMA', 'public'),
         ],
 
         'sqlsrv' => [
