@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Aposta;
 use App\Models\Partida;
 use App\Models\Apostador;
+use App\Services\ApostaService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
